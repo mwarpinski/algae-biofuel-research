@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algae Bio-Refinery Engineering Portal & Process Blueprint</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Marked.js Markdown Renderer CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Top Navigation Bar -->
+        <header class="navbar">
+            <div class="brand">
+                <div class="brand-logo">🌿</div>
+                <div class="brand-text">
+                    <h1>Algae Bio-Refinery Process Portal</h1>
+                    <p>10,000 Dry MT/day Industrial Biofuel & Co-Product Plant Blueprint</p>
+                </div>
+            </div>
+
+            <!-- Tab Navigation Buttons -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" onclick="switchTab('schematic-tab')">⚙️ Process Schematic (PFD)</button>
+                <button class="nav-tab" onclick="switchTab('calculator-tab')">📊 TEA & Mass Balance Engine</button>
+                <button class="nav-tab" onclick="switchTab('blueprint-tab')">📋 Engineering Blueprints</button>
+                <button class="nav-tab" onclick="switchTab('docs-tab')">📚 Documentation Library</button>
+            </nav>
+
+            <div class="status-pill" id="target-pill">
+                TARGET: <span id="nav-cost-display">-$0.09 / gal</span>
+            </div>
+        </header>
+
+        <!-- Main Tab Content Area -->
+        <main class="content-container">
+            
+            <!-- TAB 1: INTERACTIVE PROCESS SCHEMATIC (PFD) -->
+            <section id="schematic-tab" class="tab-page active">
+                <div class="page-header">
+                    <h2>Interactive Process Flow Diagram (PFD V2.0)</h2>
+                    <p>Click any plant process block to inspect stream mass flows, operating conditions, metallurgy, and chemical reactions.</p>
+                </div>
+
+                <div class="schematic-grid">
+                    <!-- SVG Interactive Canvas -->
+                    <div class="schematic-viewport card">
+                        <div class="viewport-controls">
+                            <span class="view-tag">Base Scale: 10,000 Dry MT/day</span>
+                            <span class="view-tag gold">495.3M gal/yr Renewable Diesel</span>
+                            <span class="view-tag green">100% Off-Grid Self-Powered</span>
+                        </div>
+                        
+                        <svg viewBox="0 0 1000 520" class="pfd-svg">
+                            <defs>
+                                <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#3b82f6" />
+                                </marker>
+                                <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981" />
+                                </marker>
+                                <marker id="arrow-gold" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#f59e0b" />
+                                </marker>
+                                <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#a855f7" />
+                                </marker>
+                            </defs>
+
+                            <!-- Process Flow Lines -->
+                            <path d="M 120 130 L 250 130" stroke="#3b82f6" stroke-width="4" marker-end="url(#arrow-blue)" class="pulse-line"/>
+                            <path d="M 370 130 L 500 130" stroke="#10b981" stroke-width="4" marker-end="url(#arrow-green)" class="pulse-line"/>
+                            <path d="M 630 130 L 760 130" stroke="#f59e0b" stroke-width="4" marker-end="url(#arrow-gold)" class="pulse-line"/>
+                            
+                            <!-- CHG Aqueous Recycle & Power Lines -->
+                            <path d="M 565 180 L 565 350 L 440 350" stroke="#10b981" stroke-width="3" stroke-dasharray="6,6" marker-end="url(#arrow-green)"/>
+                            <path d="M 310 350 L 310 180" stroke="#10b981" stroke-width="3" stroke-dasharray="6,6" marker-end="url(#arrow-green)"/>
+                            
+                            <!-- Co-Product Side Lines -->
+                            <path d="M 310 350 L 700 350" stroke="#a855f7" stroke-width="3" marker-end="url(#arrow-purple)"/>
+                            <path d="M 565 350 L 700 350" stroke="#a855f7" stroke-width="3"/>
+
+                            <!-- Interactive Process Nodes -->
+                            <!-- Module 100: Cultivation -->
+                            <g class="node-group active-node" id="node-cultivation" onclick="inspectModule('cultivation')">
+                                <rect x="20" y="80" width="100" height="100" rx="14" class="node-box"/>
+                                <text x="70" y="125" text-anchor="middle" class="node-icon">☀️</text>
+                                <text x="70" y="150" text-anchor="middle" class="node-title">Mod 100</text>
+                                <text x="70" y="165" text-anchor="middle" class="node-sub">Cultivation</text>
+                            </g>
+
+                            <!-- Module 200: Dewatering -->
+                            <g class="node-group" id="node-dewatering" onclick="inspectModule('dewatering')">
+                                <rect x="250" y="80" width="120" height="100" rx="14" class="node-box"/>
+                                <text x="310" y="125" text-anchor="middle" class="node-icon">🌀</text>
+                                <text x="310" y="150" text-anchor="middle" class="node-title">Mod 200</text>
+                                <text x="310" y="165" text-anchor="middle" class="node-sub">Dewatering</text>
+                            </g>
+
+                            <!-- Module 300: HTL Reactor -->
+                            <g class="node-group" id="node-htl" onclick="inspectModule('htl')">
+                                <rect x="500" y="80" width="130" height="100" rx="14" class="node-box"/>
+                                <text x="565" y="125" text-anchor="middle" class="node-icon">🔥</text>
+                                <text x="565" y="150" text-anchor="middle" class="node-title">Mod 300</text>
+                                <text x="565" y="165" text-anchor="middle" class="node-sub">HTL Reactor</text>
+                            </g>
+
+                            <!-- Module 500: Hydrotreater -->
+                            <g class="node-group" id="node-hydrotreater" onclick="inspectModule('hydrotreater')">
+                                <rect x="760" y="80" width="130" height="100" rx="14" class="node-box"/>
+                                <text x="825" y="125" text-anchor="middle" class="node-icon">⛽</text>
+                                <text x="825" y="150" text-anchor="middle" class="node-title">Mod 500</text>
+                                <text x="825" y="165" text-anchor="middle" class="node-sub">Hydrotreater</text>
+                            </g>
+
+                            <!-- Module 400: CHG & Power -->
+                            <g class="node-group" id="node-chg" onclick="inspectModule('chg')">
+                                <rect x="310" y="300" width="130" height="100" rx="14" class="node-box"/>
+                                <text x="375" y="345" text-anchor="middle" class="node-icon">⚡</text>
+                                <text x="375" y="370" text-anchor="middle" class="node-title">Mod 400</text>
+                                <text x="375" y="385" text-anchor="middle" class="node-sub">CHG & CHP</text>
+                            </g>
+
+                            <!-- Module 600: Co-Products -->
+                            <g class="node-group" id="node-coproducts" onclick="inspectModule('coproducts')">
+                                <rect x="700" y="300" width="130" height="100" rx="14" class="node-box"/>
+                                <text x="765" y="345" text-anchor="middle" class="node-icon">🌾</text>
+                                <text x="765" y="370" text-anchor="middle" class="node-title">Mod 600</text>
+                                <text x="765" y="385" text-anchor="middle" class="node-sub">Co-Products</text>
+                            </g>
+
+                            <!-- Stream Annotations -->
+                            <text x="185" y="120" class="svg-label">S-103: 0.05% Solids</text>
+                            <text x="435" y="120" class="svg-label">S-202: 20% Wet Paste</text>
+                            <text x="695" y="120" class="svg-label">S-301: Raw Biocrude</text>
+                            <text x="575" y="260" class="svg-label">S-302: Aqueous Phase</text>
+                            <text x="320" y="260" class="svg-label">S-402: Recycled N/P</text>
+                        </svg>
+                    </div>
+
+                    <!-- Module Inspector Card -->
+                    <div class="module-inspector card">
+                        <div class="inspector-header">
+                            <span class="inspector-tag" id="inspect-tag">MODULE 100</span>
+                            <h3 id="inspect-title">Primary Cultivation & Agrivoltaics</h3>
+                        </div>
+
+                        <div class="inspector-body">
+                            <div class="stat-row">
+                                <span class="stat-name">Technology:</span>
+                                <span class="stat-value" id="inspect-tech">Hybrid PBR-ORP + Spectrum-Splitting PV</span>
+                            </div>
+
+                            <div class="stat-row">
+                                <span class="stat-name">Operating Temp / Press:</span>
+                                <span class="stat-value" id="inspect-tp">22°C – 30°C / 1.0 – 1.5 bar</span>
+                            </div>
+
+                            <div class="stat-row">
+                                <span class="stat-name">Key Materials:</span>
+                                <span class="stat-value" id="inspect-mat">Dichroic Semitransparent Glass, PFA Liners</span>
+                            </div>
+
+                            <div class="stat-row">
+                                <span class="stat-name">Throughput / Output:</span>
+                                <span class="stat-value" id="inspect-throughput">10,000 Dry MT/day Biomass</span>
+                            </div>
+
+                            <div class="stat-row">
+                                <span class="stat-name">Optimization Lever:</span>
+                                <span class="stat-value highlight" id="inspect-lever">Free Flue Gas ($0/t) + 100MW Solar PV</span>
+                            </div>
+
+                            <div class="narrative-box">
+                                <h4>Process Engineer Narrative & Design Intent</h4>
+                                <p id="inspect-narrative">Cultivation utilizes shallow open raceways (20-30 cm deep) covered by semitransparent agrivoltaic PV panels. Panels absorb Green & NIR light (generating 100 MW power) while transmitting Red (660nm) and Blue (430nm) PAR light to algae. Deep 5m sumps achieve 88% CO2 absorption. Vortex hydrofoils induce flashing-light kinetics, while TLA antenna strains double yield to 38-48 g/m²/day.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: TECHNO-ECONOMIC & MASS BALANCE SIMULATOR -->
+            <section id="calculator-tab" class="tab-page">
+                <div class="page-header">
+                    <h2>Techno-Economic Analysis (TEA) & Mass Balance Engine</h2>
+                    <p>Dynamically adjust feedstock rate, CO2 sourcing policies, and yield parameters to calculate real-time production costs.</p>
+                </div>
+
+                <div class="calculator-grid">
+                    <!-- Sliders & Controls -->
+                    <div class="card controls-card">
+                        <h3>🎛️ Simulation Parameters</h3>
+
+                        <div class="control-group">
+                            <label>Biomass Production Rate: <span id="txt-biomass" class="val-badge">10,000</span> Dry MT/day</label>
+                            <input type="range" id="sl-biomass" min="1000" max="20000" step="500" value="10000" oninput="runSimulation()">
+                        </div>
+
+                        <div class="control-group">
+                            <label>CO2 Policy / Sourcing Mode:</label>
+                            <select id="sel-co2-mode" class="select-input" onchange="runSimulation()">
+                                <option value="flue_free" selected>Free Industrial Flue Gas ($0/ton)</option>
+                                <option value="tipping_fee">Paid Industrial Tipping Fee (+$25/ton Credit)</option>
+                                <option value="45q_dac">Biological Direct Air Capture (+$130/ton 45Q Credit)</option>
+                                <option value="commercial">Purchased Commercial Liquid CO2 (+$60/ton Cost)</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group">
+                            <label>HTL Carbon Conversion Yield: <span id="txt-htl" class="val-badge">70</span>%</label>
+                            <input type="range" id="sl-htl" min="40" max="85" step="1" value="70" oninput="runSimulation()">
+                        </div>
+
+                        <div class="control-group">
+                            <label>Co-Product Protein Credit: $<span id="txt-protein" class="val-badge">0.74</span> / gal fuel</label>
+                            <input type="range" id="sl-protein" min="0.00" max="1.50" step="0.05" value="0.74" oninput="runSimulation()">
+                        </div>
+
+                        <div class="control-group">
+                            <label>Weighted Average Cost of Capital (WACC): <span id="txt-wacc" class="val-badge">7.5</span>%</label>
+                            <input type="range" id="sl-wacc" min="4.0" max="12.0" step="0.5" value="7.5" oninput="runSimulation()">
+                        </div>
+                    </div>
+
+                    <!-- Output Results Card -->
+                    <div class="card results-card">
+                        <h3>📊 Financial & Thermodynamic Results</h3>
+
+                        <div class="metrics-grid">
+                            <div class="metric-box">
+                                <span class="m-label">Finished Diesel Output</span>
+                                <span class="m-val" id="res-fuel-gal">1.35 M gal/day</span>
+                                <span class="m-sub" id="res-fuel-yr">495.3 M gal/year</span>
+                            </div>
+
+                            <div class="metric-box">
+                                <span class="m-label">Amortized CapEx ($1.32B)</span>
+                                <span class="m-val" id="res-capex">$0.239 / gal</span>
+                                <span class="m-sub">25-year lifetime</span>
+                            </div>
+
+                            <div class="metric-box">
+                                <span class="m-label">Fixed Overhead & Labor</span>
+                                <span class="m-val" id="res-fixed">$0.155 / gal</span>
+                                <span class="m-sub">120 staff + O&M</span>
+                            </div>
+
+                            <div class="metric-box highlight-box">
+                                <span class="m-label">NET MINIMUM FUEL SELLING PRICE</span>
+                                <span class="m-val target-text" id="res-mfsp">-$0.09 / gal</span>
+                                <span class="m-sub" id="res-mfsp-status">Below $1.00 Target!</span>
+                            </div>
+                        </div>
+
+                        <!-- Cost Comparison Waterfall Chart -->
+                        <div class="cost-breakdown-section">
+                            <h4>Line-Item Cost Breakdown ($/gal)</h4>
+                            <div class="cost-bars-stack">
+                                <div class="bar-row">
+                                    <span class="row-label">Gross Cost:</span>
+                                    <div class="bar-track">
+                                        <div class="bar-fill gross-fill" id="bar-gross" style="width: 40%;"></div>
+                                    </div>
+                                    <span class="row-val" id="txt-gross-val">$0.77 / gal</span>
+                                </div>
+
+                                <div class="bar-row">
+                                    <span class="row-label">Credits & Revenues:</span>
+                                    <div class="bar-track">
+                                        <div class="bar-fill credit-fill" id="bar-credit" style="width: 45%;"></div>
+                                    </div>
+                                    <span class="row-val credit-text" id="txt-credit-val">-$0.86 / gal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: ENGINEERING BLUEPRINTS & HAND-OFF CHECKLIST -->
+            <section id="blueprint-tab" class="tab-page">
+                <div class="page-header">
+                    <h2>Process Engineering Blueprints & Hand-Off Checklist</h2>
+                    <p>Key design criteria, metallurgy selections, reactor specifications, and siting guidelines for EPC contractors.</p>
+                </div>
+
+                <div class="blueprint-grid">
+                    <!-- Metallurgy & Materials Matrix -->
+                    <div class="card">
+                        <h3>🛡️ Materials of Construction & Metallurgy Matrix</h3>
+                        <table class="bp-table">
+                            <thead>
+                                <tr>
+                                    <th>Process Block</th>
+                                    <th>Operating Conditions</th>
+                                    <th>Selected Alloy / Material</th>
+                                    <th>Corrosion / Wear Threat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Cultivation Ponds</td>
+                                    <td>25°C, pH 10.5, 35 ppt salt</td>
+                                    <td>High-Density PFA Liner / Geotextile</td>
+                                    <td>Alkaline & UV Degradation</td>
+                                </tr>
+                                <tr>
+                                    <td>Dewatering Modules</td>
+                                    <td>30°C, 1.2 bar, 20% solids</td>
+                                    <td>Zwitterionic Polymeric Membranes</td>
+                                    <td>EPS Bio-fouling & Clogging</td>
+                                </tr>
+                                <tr>
+                                    <td>HTL Reactor Train</td>
+                                    <td>350°C, 20.0 MPa (2,900 psi)</td>
+                                    <td>Inconel 625 / Titanium Grade 2</td>
+                                    <td>Stress Corrosion Cracking & Cl- Pitting</td>
+                                </tr>
+                                <tr>
+                                    <td>HTL Depressurization Valve</td>
+                                    <td>350°C -> 60°C, 20 MPa -> 1 bar</td>
+                                    <td>Sintered Silicon Carbide (SiC) Trim</td>
+                                    <td>Supersonic Slurry Erosion</td>
+                                </tr>
+                                <tr>
+                                    <td>CHG Reactor Bed</td>
+                                    <td>380°C, 20.0 MPa</td>
+                                    <td>Monolithic Ru/TiO2 Catalyst</td>
+                                    <td>Hydrothermal Support Dissolution</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Siting & Land Requirements -->
+                    <div class="card">
+                        <h3>📍 Site Selection Criteria & Top Siting Region</h3>
+                        <div class="siting-box">
+                            <h4>Recommended Site #1: US Texas / Louisiana Gulf Coast Corridor</h4>
+                            <ul>
+                                <li><strong>Solar Irradiance</strong>: 6.2 kWh/m²/day (330 freeze-free days/yr).</li>
+                                <li><strong>Feedstock Synergy</strong>: Co-located with dense petro-refineries and chemical plants (Free Flue Gas CO2 + 45Q credits).</li>
+                                <li><strong>Land Availability</strong>: Flat coastal non-arable land (&lt; $2,200 / acre).</li>
+                                <li><strong>Logistics & Labor</strong>: Deep-water ports, pipeline networks, and skilled refinery operator workforce.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: DOCUMENTATION LIBRARY (13 CHAPTERS + MASTER REPORT) -->
+            <section id="docs-tab" class="tab-page">
+                <div class="docs-browser-layout">
+                    <!-- Sidebar Document Index -->
+                    <aside class="docs-sidebar card">
+                        <h3>📚 Master Documentation</h3>
+                        <ul class="doc-menu" id="doc-menu-list">
+                            <!-- Populated dynamically via JS -->
+                        </ul>
+                    </aside>
+
+                    <!-- Main Markdown Document Reader -->
+                    <article class="doc-viewer card">
+                        <div class="doc-header">
+                            <span class="doc-path-tag" id="doc-active-path">MASTER_TECHNICAL_REPORT.md</span>
+                            <h2 id="doc-active-title">MASTER REPORT: Executive Project Case Study</h2>
+                        </div>
+                        <div class="markdown-body" id="doc-body-content">
+                            <!-- Rendered Markdown text populated dynamically -->
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Load Application Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
